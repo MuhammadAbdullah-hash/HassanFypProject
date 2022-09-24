@@ -4,8 +4,9 @@ const pool = require('../dataBase/dbConnector');
 
 
 // middleware that is specific to this router
-UserController.use((req, res, next) => {
-    next()  })
+UserController.use((req, res, next) => { next()  })
+
+
 
 
 
@@ -14,19 +15,27 @@ UserController.use((req, res, next) => {
 UserController.post('/login', async (req, res) => {
     // req --> It is the request Object In which we will get data from user that will hit this api
     // res --> It is the responce Object that this api will send to the user 
+    const data = req.body;
+    if( data.user &&  data.password ){
+        const dataInsert = [data.user , data.password]
+        pool.getConnection(function(err, connection) {
+            if(err){
+                connection.release();
+                res.send(err) }
+            else{
+                connection.query( "INSERT INTO users (username, password) VALUES (?,?)", dataInsert , function(err2 , result2){
+                    if(err2){
+                        connection.release();
+                        res.send("User Not added successfully") }
+                    else{
+                        connection.release();
+                        res.send("User Added Successfully") }
+                })    
+            }})
+    }
+    else{
+        res.send("Plz Provide Username and Password") }
 
-    const data = JSON.parse(req.body);
-    console.log("-->" , data)
-
-    pool.getConnection(function(err, connection) {
-        if(err){
-            connection.release();
-            res.send(err) }
-        else{
-            connection.release();
-            res.send("Connected Successfully") }
-
-    })
 })
 
 

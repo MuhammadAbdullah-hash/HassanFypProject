@@ -1,19 +1,22 @@
 const express = require("express");
 const cors = require("cors");
+const bodyParser = require('body-parser');
 const es6Renderer = require('express-es6-template-engine');
 
-// ------ Initializing Middle-Ware ------ //
 
+
+// ------ Initializing Middle-Ware ------ //
 const PORT  = 4000;
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 // Setting Templating Engine
 app.engine('html', es6Renderer);
 // Defining Directory that contains all templates
 app.set('views', 'templates');
 app.set('view engine', 'html');
-
 // -------------------------------------- //
 
 
