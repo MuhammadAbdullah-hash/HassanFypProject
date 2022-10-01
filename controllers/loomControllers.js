@@ -9,8 +9,9 @@ looomController.use((req, res, next) => {
 
 
 // define the home page route
-looomController.get('/', (req, res) => {
-    res.send('Looms Apis')
+looomController.get('/all', (req, res) => {
+    res.render("loomsPage.html" , {locals: {title: 'This is Backend Api Talking !'}} )
+
 })
 
   

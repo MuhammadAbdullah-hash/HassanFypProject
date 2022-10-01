@@ -9,8 +9,8 @@ employRecordsController.use((req, res, next) => {
 
 
 // define the home page route
-employRecordsController.get('/', (req, res) => {
-    res.send('Epmloy Records Apis')
+employRecordsController.get('/all', (req, res) => {
+    res.render("employRecordsPage.html" , {locals: {title: 'This is Backend Api Talking !'}} )
 })
 
   

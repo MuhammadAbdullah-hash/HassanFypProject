@@ -9,8 +9,45 @@
 <body>
 
     <h1> THIS IS SignIn / LogIn PAGE </h1>
-    <p> Hassan's Project </p>
     <p>${title}</p>
 
+    <label for="Uname">User name:</label><br>
+    <input type="text" id="Uname" name="user"><br>
+    <label for="Pass">Password:</label><br>
+    <input type="text" id="Pass" name="password">
+    <button onclick="{callLoginApi()}" >Login</button>
+
 </body>
+
+<script>
+    function callLoginApi(){
+        const username = document.getElementById("Uname").value;
+        const pass = document.getElementById("Pass").value;
+        let data = {"user" : username , "password"  : pass}
+        fetch('http://localhost:4000/user/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json'},
+        body: JSON.stringify(data)})
+        .then((response) => response.json())
+        .then((data) => {
+        if(data.status){
+            // Storing token in Local Storage
+            localStorage.setItem("token" , data.token)
+
+            // Routing Based upon the role of user that is signing IN
+            if(data.role == "admin"){ window.location.replace("http://localhost:4000/loom/all") }
+            else if(data.role == 'employee'){ window.location.replace("http://localhost:4000/emprec/all") }        
+            // Add more ELSE IF Here
+
+        }
+        else{ alert("Invalid Username or password")}
+        })
+        .catch((error) => {
+        console.error('Error:', error);
+        });
+    }
+
+
+</script>
+
 </html>

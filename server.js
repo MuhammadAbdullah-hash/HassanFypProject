@@ -21,6 +21,7 @@ app.set('view engine', 'html');
 
 
 // ----------- Importing Controlelrs -----------//
+var verifyRoutes = require("./controllers/verifyToken");
 var userRoutes = require("./controllers/userControllers");
 var loomRoutes = require("./controllers/loomControllers");
 var employRecordRoutes = require("./controllers/employRecordsController");
@@ -30,9 +31,11 @@ var employRecordRoutes = require("./controllers/employRecordsController");
 
 
 // Initializing different Routes with base Apis //
+app.use('/verify', verifyRoutes);
 app.use('/user', userRoutes);
 app.use('/loom', loomRoutes);
 app.use('/emprec', employRecordRoutes);
+
 
 
 
